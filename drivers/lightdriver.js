@@ -1,4 +1,5 @@
-var Gpio = require('onoff').Gpio
+var Gpio = require('onoff').Gpio,
+    async = require('async')
 
 var colors = {
   red:    { pin: 10, gpio: null },
@@ -13,10 +14,6 @@ for (var color in colors) {
   color.gpio = new Gpio(color.pin, 'out');
   color.gpio.write(0);
 }
-
-var getColorMap = function() {
-  return colors;
-};
 
 var turnOn = function(color, err) {
   if (!colors.hasOwnProperty(color)) {
@@ -44,14 +41,31 @@ var toggle = function(color, err) {
 };
 
 var allOn = function(err) {
-
+  var tasks = [];
+  for (var color in colors) {
+    var func = (function(color) {
+      return function(err) {
+        colors[color].gpio.write(1, err);
+      }
+    })(color);
+    tasks.push(func);
+  }
+  async.series(tasks, err);
 };
 
 var allOff = function(err) {
-
+  var tasks = [];
+  for (var color in colors) {
+    var func = (function(color) {
+      return function(err) {
+        colors[color].gpio.write(0, err);
+      }
+    })(color);
+    tasks.push(func);
+  }
+  async.series(tasks, err);
 };
 
-exports.getColorMap = getColorMap;
 exports.turnOn = turnOn;
 exports.turnOff = turnOff;
 exports.toggle = toggle;

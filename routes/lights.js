@@ -31,8 +31,27 @@ var colorToggleRoute = function(req, res) {
   });
 };
 
+var allOnRoute = function(req, res) {
+  lightdriver.allOn(function(err) {
+    if (err) {
+      res.send(500, err);
+    }
+    res.send('ok');
+  });
+};
+
+var allOffRoute = function(req, res) {
+  lightdriver.allOff(function(err) {
+    if (err) {
+      res.send(500, err);
+    }
+    res.send('ok');
+  });
+};
+
 exports.addRoutes = function(app, basepath) {
-  colors = lightdriver.getColorMap();
+  app.get(basepath+'/all/on', allOnRoute);
+  app.get(basepath+'/all/off', allOffRoute);
   app.get(basepath+'/:color/on', colorOnRoute);
   app.get(basepath+'/:color/off', colorOffRoute);
   app.get(basepath+'/:color/toggle', colorToggleRoute);
