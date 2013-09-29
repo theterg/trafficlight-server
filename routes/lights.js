@@ -3,7 +3,7 @@
  * GET home page.
  */
 
-var lightdriver = require('../drivers/lightdriver');
+var lightdriver = {}
 
 var colorOnRoute = function(req, res) {
   lightdriver.turnOn(req.params.color, function(err) {
@@ -50,6 +50,7 @@ var allOffRoute = function(req, res) {
 };
 
 exports.addRoutes = function(app, basepath) {
+  lightdriver = app.trafficlight.driver;
   app.get(basepath+'/all/on', allOnRoute);
   app.get(basepath+'/all/off', allOffRoute);
   app.get(basepath+'/:color/on', colorOnRoute);

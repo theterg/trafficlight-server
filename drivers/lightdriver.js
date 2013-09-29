@@ -23,6 +23,14 @@ exports.availableColors = function() {
   return ret;
 }
 
+exports.getStatus = function() {
+  var ret = [];
+  for (color in colors) {
+    ret[color] = colors[color].gpio.readSync();
+  }
+  return ret;
+};
+
 exports.turnOn = function(color, err) {
   if (!colors.hasOwnProperty(color)) {
     err('Color '+color+' not found');

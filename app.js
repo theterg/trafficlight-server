@@ -8,8 +8,13 @@ var routes = require('./routes');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var driver = require('./drivers/lightdriver');
 
 var app = express();
+
+// Make our own namespace on App
+app.trafficlight = {};
+app.trafficlight.driver = driver;
 
 // all environments
 app.set('port', process.env.PORT || 80);

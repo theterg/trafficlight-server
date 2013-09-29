@@ -1,8 +1,37 @@
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+.traffic_cell {
+  border-radius: 20px;
+  text-align: center;
+  margin: 5px;
+  width: 100px;
+  height: 100px;
+  display: block;
+}
+
+#red.traffic_cell {
+  background-color: #880000
+}
+#red.traffic_cell.active {
+  background-color: #FF0000
+}
+
+#yellow.traffic_cell {
+  background-color: #888800
+}
+#yellow.traffic_cell.active {
+  background-color: #FFFF00
+}
+
+#green.traffic_cell {
+  background-color: #008800
+}
+#green.traffic_cell.active {
+  background-color: #00FF00
 }
