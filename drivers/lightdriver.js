@@ -15,7 +15,15 @@ for (var color in colors) {
   color.gpio.write(0);
 }
 
-var turnOn = function(color, err) {
+exports.availableColors = function() {
+  var ret = [];
+  for (color in colors) {
+    ret.push(color);
+  }
+  return ret;
+}
+
+exports.turnOn = function(color, err) {
   if (!colors.hasOwnProperty(color)) {
     err('Color '+color+' not found');
     return;
@@ -23,7 +31,7 @@ var turnOn = function(color, err) {
   colors[color].gpio.write(1, err);
 };
 
-var turnOff = function(color, err) {
+exports.turnOff = function(color, err) {
   if (!colors.hasOwnProperty(color)) {
     err('Color '+color+' not found');
     return;
@@ -31,7 +39,7 @@ var turnOff = function(color, err) {
   colors[color].gpio.write(0, err);
 };
 
-var toggle = function(color, err) {
+exports.toggle = function(color, err) {
   if (!colors.hasOwnProperty(color)) {
     err('Color '+color+' not found');
     return;
@@ -40,7 +48,7 @@ var toggle = function(color, err) {
   pin.write(pin.readSync() === 0 ? 1 : 0, err);
 };
 
-var allOn = function(err) {
+exports.allOn = function(err) {
   var tasks = [];
   for (var color in colors) {
     var func = (function(color) {
@@ -53,7 +61,7 @@ var allOn = function(err) {
   async.series(tasks, err);
 };
 
-var allOff = function(err) {
+exports.allOff = function(err) {
   var tasks = [];
   for (var color in colors) {
     var func = (function(color) {
@@ -65,9 +73,3 @@ var allOff = function(err) {
   }
   async.series(tasks, err);
 };
-
-exports.turnOn = turnOn;
-exports.turnOff = turnOff;
-exports.toggle = toggle;
-exports.allOn = allOn;
-exports.allOff = allOff;
