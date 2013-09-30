@@ -31,6 +31,10 @@ exports.getStatus = function() {
   return ret;
 };
 
+exports.getColor = function(color) {
+  return colors[color].gpio.readSync();
+};
+
 exports.turnOn = function(color, err) {
   if (!colors.hasOwnProperty(color)) {
     err('Color '+color+' not found');
