@@ -3,6 +3,7 @@
  * GET home page.
  */
 var lights = require('./lights');
+var websocket = require('./websocket');
 var driver = {}
 
 var index = function(req, res){
@@ -18,3 +19,7 @@ exports.addRoutes = function(app) {
   app.get('/', index);
   lights.addRoutes(app, '/light');
 };
+
+exports.addListeners = function(app) {
+  websocket.addListeners(app);
+}

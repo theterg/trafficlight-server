@@ -40,35 +40,5 @@ routes.addRoutes(app);
 var server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
   app.trafficlight.io = io.listen(server);
-  app.trafficlight.io.sockets.on('connection', function(socket) {
-    var status = app.trafficlight.driver.getStatus();
-    for (var color in status) {
-      socket.emit('update', {
-        color: color,
-        value: status[color]
-      });
-    }
-    socket.on('turnOn', function(color) {
-      app.trafficlight.driver.turnOn(color);
-      app.trafficlight.io.sockets.emit('update', {
-        color: color,
-        value: 1
-      });
-    });
-    socket.on('turnOff', function(color) {
-      app.trafficlight.driver.turnOff(color);
-      app.trafficlight.io.sockets.emit('update', {
-        color: color,
-        value: 0
-      });
-    });
-    socket.on('toggle', function(color) {
-      app.trafficlight.driver.toggle(color);
-      app.trafficlight.io.sockets.emit('update', {
-        color: color,
-        value: app.trafficlight.driver.getColor(color)
-      });
-    });
-  });
-
+  routes.addListeners(app);
 });

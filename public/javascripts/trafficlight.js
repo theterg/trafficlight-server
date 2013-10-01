@@ -11,7 +11,6 @@ $(document).ready(function() {
     }
   });
   $('.traffic_cell').click(function() {
-    //$.get('./light/'+this.id+'/toggle');
     socket.emit('toggle', this.id);
   });
 });

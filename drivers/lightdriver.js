@@ -32,7 +32,8 @@ exports.getStatus = function() {
 };
 
 exports.getColor = function(color) {
-  return colors[color].gpio.readSync();
+  var ret = colors[color].gpio.readSync();
+  return ret;
 };
 
 exports.turnOn = function(color, err) {
